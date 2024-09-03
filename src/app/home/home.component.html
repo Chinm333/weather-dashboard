@@ -1,0 +1,38 @@
+<div class="WeatherPage" [ngStyle]="{'background-image': 'url(' + backgroundImage + ')'}">
+  <div *ngIf="weatherData && forecastData" class="container">
+    <div class="input-group mb-3">
+      <input type="text" class="form-control" placeholder="Search city" aria-label="city" #cityInput
+        (keydown.enter)="searchByCity(cityInput.value)">
+      <button class="btn" type="button" (click)="searchByCity(cityInput.value)">Search</button>
+    </div>
+    <div class="row mb-4">
+      <div class="col">
+        <div class="header_text">
+          <h1>{{ weatherData.name }}</h1>
+          <p>{{ getCurrentDate() }}</p>
+        </div>
+        <div class="tempData">
+          <h1>{{ weatherData.main.temp }}°C</h1>
+        </div>
+        <div class="tempNote">
+          <label>{{ weatherData.weather[0].description }}</label>
+          <p><i class="bi bi-droplet"></i> {{ weatherData.main.humidity }}%</p>
+          <p><i class="bi bi-wind"></i> {{ weatherData.wind.speed }}</p>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <div *ngFor="let forecast of getDailyForecast(forecastData)" class="col forecast-day">
+            <h4 class="date">{{ forecast.date }}</h4>
+            <p>{{ forecast.main }}</p>
+            <p>Min: {{ forecast.tempMin }}°</p>
+            <p>Max: {{ forecast.tempMax }}°</p>
+            <p><i class="bi bi-cloud-lightning-rain"></i> {{ (forecast.pop * 100).toFixed(0) }}%</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
